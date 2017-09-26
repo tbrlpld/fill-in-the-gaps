@@ -1,6 +1,38 @@
-#!/usr/bin/python
+#!/usr/bin/python3
+
+import time
 
 print("### Fill in the Gaps ###")
+
+def typewriter_print(string_to_print):
+    for i in range(1, len(string_to_print) + 1):
+        print("\r" + string_to_print[:i], end="")
+        time.sleep(0.5)
+
+def fill_in_the_gaps_title():
+    """Print an animated title for the game."""
+    print("\n")
+    title = "### Fill in the ____ ###"
+    title_max_index = len(title) + 1
+    fix_first_index = 16
+    for i in range(1, title_max_index):
+        print("\r" + title[:i], end="")
+        time.sleep(0.1)
+    # print("")
+    # print("")   
+    for i in range(title_max_index, fix_first_index, -1):
+        print("\r" + " " * len(title), end="")
+        print("\r" + title[:i], end="")
+        # print(title[:i])
+        time.sleep(0.3)
+    # print("")
+    title = "### Fill in the Gaps ###"
+    for i in range(fix_first_index, title_max_index, 1):
+        print("\r" + title[:i], end="")
+        time.sleep(0.1)
+    print("\n")
+    return None
+
 
 def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guesses_limit):
     """This is the main function to play the fill-in-the-gaps game. It takes the
@@ -51,22 +83,28 @@ print("###################")
 print("Testing")
 print("###################")
 
-print("")
-print("Testing play_game() - 1")
-print("")
-play_game(
-    problem_phrase="This is a __1__.", 
-    wrong_guesses_limit=1, 
-    list_of_tuples_placeholder_and_answer=[("__1__","placeholder")])
+# print("")
+# print("Testing play_game() - 1")
+# print("")
+# play_game(
+#     problem_phrase="This is a __1__.", 
+#     wrong_guesses_limit=1, 
+#     list_of_tuples_placeholder_and_answer=[("__1__","placeholder")])
 
 
+# print("")
+# print("Testing play_game() - 2")
+# print("")
+# play_game(
+#     problem_phrase="This is a __1__. And that's another __2__.", 
+#     wrong_guesses_limit=1, 
+#     list_of_tuples_placeholder_and_answer=[
+#         ("__1__","placeholder"),
+#         ("__2__","gap")
+#         ])
+
 print("")
-print("Testing play_game() - 2")
+print("Testing fill_in_the_gaps_title() - 1")
 print("")
-play_game(
-    problem_phrase="This is a __1__. And that's another __2__.", 
-    wrong_guesses_limit=1, 
-    list_of_tuples_placeholder_and_answer=[
-        ("__1__","placeholder"),
-        ("__2__","gap")
-        ])
+fill_in_the_gaps_title()
+
