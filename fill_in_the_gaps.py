@@ -1,13 +1,9 @@
-#!/usr/bin/python3
+#!/usr/bin/python2
 
+from __future__ import print_function
 import time
 
-print("### Fill in the Gaps ###")
-
-def typewriter_print(string_to_print):
-    for i in range(1, len(string_to_print) + 1):
-        print("\r" + string_to_print[:i], end="")
-        time.sleep(0.5)
+# print("### Fill in the Gaps ###")
 
 def fill_in_the_gaps_title():
     """Print an animated title for the game."""
@@ -16,7 +12,7 @@ def fill_in_the_gaps_title():
     title_max_index = len(title) + 1
     fix_first_index = 16
     for i in range(1, title_max_index):
-        print("\r" + title[:i], end="")
+        print("\r" + title[:i], end=" ")
         time.sleep(0.1)
     # print("")
     # print("")   
@@ -79,32 +75,5 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
     return None
 
 
-print("###################")
-print("Testing")
-print("###################")
 
-# print("")
-# print("Testing play_game() - 1")
-# print("")
-# play_game(
-#     problem_phrase="This is a __1__.", 
-#     wrong_guesses_limit=1, 
-#     list_of_tuples_placeholder_and_answer=[("__1__","placeholder")])
-
-
-# print("")
-# print("Testing play_game() - 2")
-# print("")
-# play_game(
-#     problem_phrase="This is a __1__. And that's another __2__.", 
-#     wrong_guesses_limit=1, 
-#     list_of_tuples_placeholder_and_answer=[
-#         ("__1__","placeholder"),
-#         ("__2__","gap")
-#         ])
-
-print("")
-print("Testing fill_in_the_gaps_title() - 1")
-print("")
-fill_in_the_gaps_title()
 
