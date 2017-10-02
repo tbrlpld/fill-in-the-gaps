@@ -2,33 +2,58 @@
 
 from __future__ import print_function
 import time
+import sys
 
-# print("### Fill in the Gaps ###")
+# ******************************************************************************
+#
+# TITLE
+# 
+# ******************************************************************************
+
+def print_overwritable_slice(string_to_print, slice_end):
+    """Prints a string to a defined slice end, and places the cursor at the 
+    beginning of the line, to enable overwriting."""
+    sys.stdout.write("\r" + string_to_print[:slice_end])
+    sys.stdout.flush()
+    return None
+
+def clear_line(length):
+    """Prints a given number of spaces (basically an empty line). The cursor is
+    placed back at the beginning of the line to be overwritten."""
+    sys.stdout.write("\r" + " "*length)
+    sys.stdout.flush()    
+    return None
 
 def fill_in_the_gaps_title():
     """Print an animated title for the game."""
-    print("\n")
+    print("")
     title = "### Fill in the ____ ###"
     title_max_index = len(title) + 1
     fix_first_index = 16
+    # print title forward with gap
     for i in range(1, title_max_index):
-        print("\r" + title[:i], end=" ")
-        time.sleep(0.1)
-    # print("")
-    # print("")   
+        print_overwritable_slice(string_to_print=title, slice_end=i)
+        time.sleep(0.2)
+    # wait
+    time.sleep(1)
+    # remove "typo"
     for i in range(title_max_index, fix_first_index, -1):
-        print("\r" + " " * len(title), end="")
-        print("\r" + title[:i], end="")
-        # print(title[:i])
-        time.sleep(0.3)
-    # print("")
+        clear_line(len(title))
+        print_overwritable_slice(string_to_print=title, slice_end=i)
+        time.sleep(0.2)
+    # print fixed title
     title = "### Fill in the Gaps ###"
     for i in range(fix_first_index, title_max_index, 1):
-        print("\r" + title[:i], end="")
-        time.sleep(0.1)
+        print_overwritable_slice(string_to_print=title, slice_end=i)
+        time.sleep(0.2)
     print("\n")
     return None
 
+# ******************************************************************************
+#
+# GAME
+# 
+# ******************************************************************************
 
 def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guesses_limit):
     """This is the main function to play the fill-in-the-gaps game. It takes the
