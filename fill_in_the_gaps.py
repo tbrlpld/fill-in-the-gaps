@@ -4,11 +4,19 @@ from __future__ import print_function
 import time
 import sys
 
+####  TODO
+# 
+# - Replace case sensitve. 
+# - User select difficulty level.
+# - User select number of possible wrong guesses.
+# - Create problems for easy, medium and hard.
+
 # ******************************************************************************
 #
 # HELPER FUNCTIONS
 # 
 # ******************************************************************************
+
 
 def print_line(char="-"):
     """Prints 80 repetitions of a defined character to create a line. 
@@ -21,6 +29,7 @@ def print_line(char="-"):
 # TITLE
 # 
 # ******************************************************************************
+
 
 def print_overwritable_slice(string_to_print, slice_end):
     """Prints a string to a defined slice end, and places the cursor at the 
@@ -74,6 +83,7 @@ def fill_in_the_gaps_title():
 # 
 # ******************************************************************************
 
+
 def print_phrase(phrase):
     """Prints the problem phrase in between two lines (for accent)."""
     print("\nPhrase:")
@@ -81,6 +91,7 @@ def print_phrase(phrase):
     print(phrase)
     print_line()
     return None
+
 
 def print_final_state(phrase):
     """Prints the final state of problem phrase in between two lines of stronger
@@ -90,6 +101,32 @@ def print_final_state(phrase):
     print(phrase)
     print_line(char="=")
     return None    
+
+
+def replace_case_sensitive(phrase, placeholder, replacement):
+    """Takes in a phrase (possibly conisting of multiple sentences), a placeholder
+    and its replacement. Each occurence of the placeholder will be replaced with
+    the replacement. If the placeholder is first word in phrase of sentence, the
+    replacement is capitalized. 
+    The phrase with placeholders replaced will be returned."""
+
+    while placeholder in phrase:
+        placeholder_index = phrase.find(placeholder)
+
+        is_first_word_of_phrase = placeholder_index == 0
+        is_first_word_of_sentence = placeholder_index >= 2 \
+            and phrase[placeholder_index - 2] in ".!?"
+
+        if is_first_word_of_phrase or is_first_word_of_sentence:
+            # If placeholder is first word in phrase or sentence, its replacement
+            # should be capitalized.
+            phrase = phrase.replace(placeholder, replacement.capitalize(), 1)
+        else:
+            # Otherwise, the replacement can be used as is.
+            phrase = phrase.replace(placeholder, replacement, 1)
+
+    return phrase
+
 
 def end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index, 
     max_placeholder_index):
@@ -136,10 +173,12 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
 
         if user_answer.lower() == answer.lower(): # checking case insensitive
             print("Correct!")
-            problem_phrase = problem_phrase.replace(placeholder, answer)
+            problem_phrase = replace_case_sensitive(problem_phrase, placeholder, 
+                answer)
             placeholder_index += 1
         else:
-            print("Sorry, but '{}' does not fit {}.".format(user_answer, placeholder))
+            print("Sorry, but '{}' does not fit {}.".format(user_answer, 
+                placeholder))
             wrong_guesses_counter += 1
             if wrong_guesses_counter <= wrong_guesses_limit:
                 print("Try again!")
