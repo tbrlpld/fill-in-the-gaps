@@ -6,6 +6,18 @@ import sys
 
 # ******************************************************************************
 #
+# HELPER FUNCTIONS
+# 
+# ******************************************************************************
+
+def print_line(char="-"):
+    """Prints 80 repetitions of a defined character to create a line. 
+    Default is '-'."""
+    print(80*char)
+    return None
+
+# ******************************************************************************
+#
 # TITLE
 # 
 # ******************************************************************************
@@ -62,6 +74,23 @@ def fill_in_the_gaps_title():
 # 
 # ******************************************************************************
 
+def print_phrase(phrase):
+    """Prints the problem phrase in between two lines (for accent)."""
+    print("\nPhrase:")
+    print_line()
+    print(phrase)
+    print_line()
+    return None
+
+def print_final_state(phrase):
+    """Prints the final state of problem phrase in between two lines of stronger
+    accent."""
+    print("\nFinal State:")
+    print_line(char="=")
+    print(phrase)
+    print_line(char="=")
+    return None    
+
 def end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index, 
     max_placeholder_index):
     """Determines if game was won or lost and prints a fitting message 
@@ -71,13 +100,15 @@ def end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index,
     if wrong_guesses_counter > wrong_guesses_limit:
         print("You have reached the limit of wrong guesses!")
     elif placeholder_index > max_placeholder_index:
-        print("Congratulations. You filled all the gaps correctly.")
+        print("Congratulations. You have filled all the gaps correctly.")
     else:
         print("This is odd. The game is over, but I  don't know why!?")
     
     print("")
+    print_line(char="#")
     print("### GAME OVER ###")    
-
+    print_line(char="#")
+    print("")
     return None
 
 
@@ -100,16 +131,20 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
         placeholder = list_of_tuples_placeholder_and_answer[placeholder_index][0]
         answer = list_of_tuples_placeholder_and_answer[placeholder_index][1]
 
-        print(problem_phrase)
+        print_phrase(problem_phrase)
         user_answer = raw_input("What do you think fits {}? ".format(placeholder))
 
-        if user_answer == answer:
+        if user_answer.lower() == answer.lower(): # checking case insensitive
             print("Correct!")
             problem_phrase = problem_phrase.replace(placeholder, answer)
             placeholder_index += 1
         else:
             print("Sorry, but '{}' does not fit {}.".format(user_answer, placeholder))
             wrong_guesses_counter += 1
+            if wrong_guesses_counter <= wrong_guesses_limit:
+                print("Try again!")
+
+    print_final_state(problem_phrase)
 
     # The game is over. 
     # Time to tell the player how it ended.
