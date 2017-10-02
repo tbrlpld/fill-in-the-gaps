@@ -36,22 +36,22 @@ def fill_in_the_gaps_title():
     # print title forward with gap
     for i in range(1, title_max_index):
         print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.2)
+        time.sleep(0.1)
     
     # wait (like recognizing that there is something wrong in the title.)
-    time.sleep(1)
+    time.sleep(0.5)
     
     # remove "typo"
     for i in range(title_max_index, fix_first_index, -1):
         clear_line(len(title))
         print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.2)
+        time.sleep(0.1)
     
     # print fixed title
     title = "### Fill in the Gaps ###"
     for i in range(fix_first_index, title_max_index, 1):
         print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.2)
+        time.sleep(0.1)
     print("\n")
     
     return None
