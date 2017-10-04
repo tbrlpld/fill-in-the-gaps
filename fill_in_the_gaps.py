@@ -27,6 +27,20 @@ def print_line(char="-"):
     return None
 
 
+def isnumber(num):
+    """Tests is the input can be turned into a float. If yes,
+    returns True, otherwise returns False""".
+    if isinstance(num, (str, float, int)):
+        try:
+            float(num)
+        except ValueError:
+            return False
+        else: 
+            return True
+    else:
+        return False
+
+
 
 # ******************************************************************************
 #
@@ -105,7 +119,14 @@ def select_difficulty():
     return user_level
 
 
-
+def select_wrong_guesses():
+    """Promts the user to select a number of possible wrong guesses or to just 
+    hit [Enter] for the default value of 3. Returns the selected number of 
+    possible wrong guesses."""
+    user_limit = ""
+    user_limit = raw_input("Wrong guesses: ")
+    print(user_limit)
+    return user_limit
 
 
 # ******************************************************************************
