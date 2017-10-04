@@ -6,8 +6,6 @@ import sys
 
 ####  TODO
 # 
-# - User select difficulty level.
-# - User select number of possible wrong guesses.
 # - Create problems for easy, medium and hard.
 # - Set up whole game flow.
 
@@ -28,8 +26,11 @@ def print_line(char="-"):
 
 
 def isnumber(num):
-    """Tests is the input can be turned into a float. If yes,
-    returns True, otherwise returns False""".
+    """Tests is the input can be turned into a float. If yes returns True, 
+    otherwise returns False."""
+
+    # float() can only handle numbers (int, float) and strings as inputs. 
+    # Therefore, testing if input is one of these types.
     if isinstance(num, (str, float, int)):
         try:
             float(num)
@@ -122,10 +123,18 @@ def select_difficulty():
 def select_wrong_guesses():
     """Promts the user to select a number of possible wrong guesses or to just 
     hit [Enter] for the default value of 3. Returns the selected number of 
-    possible wrong guesses."""
+    possible wrong guesses as an integer."""
     user_limit = ""
-    user_limit = raw_input("Wrong guesses: ")
-    print(user_limit)
+    default_limit = 3
+    while not isnumber(user_limit):
+        user_limit = raw_input("How may wrong guesses do you want to be allowed?"
+            " (Hit [Enter] for default = {}): ".format(default_limit))
+        if user_limit == "":
+            user_limit = default_limit
+        if not isnumber(user_limit):
+            print("Sorry, that is not a valid number of wrong guesses. Try again.\n")
+    user_limit = int(float(user_limit))
+    print("Ok, you are granted {} wrong guesses to solve the quiz.".format(user_limit))
     return user_limit
 
 
