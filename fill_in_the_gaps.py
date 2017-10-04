@@ -6,10 +6,12 @@ import sys
 
 ####  TODO
 # 
-# - Replace case sensitve. 
 # - User select difficulty level.
 # - User select number of possible wrong guesses.
 # - Create problems for easy, medium and hard.
+# - Set up whole game flow.
+
+
 
 # ******************************************************************************
 #
@@ -23,6 +25,8 @@ def print_line(char="-"):
     Default is '-'."""
     print(80*char)
     return None
+
+
 
 # ******************************************************************************
 #
@@ -76,6 +80,33 @@ def fill_in_the_gaps_title():
     print("\n")
     
     return None
+
+
+
+# ******************************************************************************
+#
+# USER OPTIONS
+# 
+# ******************************************************************************
+
+
+def select_difficulty():
+    """Promts the user to select a difficulty level (easy, medium or hard) and 
+    returns the selected level as string. If the user input does not match one 
+    of the options, the input is requested again."""
+    user_level = ""
+    possible_levels = ["easy", "medium", "hard"]
+    while user_level not in possible_levels:
+        user_level = raw_input("Which difficulty level do you want to play? "
+            "Possible choices: {}\n".format(possible_levels))
+        if user_level not in possible_levels:
+            print("Sorry, that is not a valid level. Try again.\n")
+    print("Ok, it's going to be {}.".format(user_level))
+    return user_level
+
+
+
+
 
 # ******************************************************************************
 #
