@@ -6,8 +6,9 @@ import sys
 
 ####  TODO
 # 
-# - Create problems for easy, medium and hard.
 # - Set up whole game flow.
+# - Create problems for easy, medium and hard.
+# - Check for function with more than 18 lines.
 
 
 
@@ -69,6 +70,7 @@ def clear_line(length):
 def fill_in_the_gaps_title():
     """Print an animated title for the game."""
     print("")
+    print_line(char="#")
     title = "### Fill in the ____ ###"
     title_max_index = len(title) + 1
     fix_first_index = 16
@@ -92,7 +94,10 @@ def fill_in_the_gaps_title():
     for i in range(fix_first_index, title_max_index, 1):
         print_overwritable_slice(string_to_print=title, slice_end=i)
         time.sleep(0.1)
-    print("\n")
+    print("")
+    print_line(char="#")
+    print("")
+
     
     return None
 
@@ -116,7 +121,7 @@ def select_difficulty():
             "Possible choices: {}\n".format(possible_levels))
         if user_level not in possible_levels:
             print("Sorry, that is not a valid level. Try again.\n")
-    print("Ok, it's going to be {}.".format(user_level))
+    print("Ok, it's going to be {}.\n".format(user_level))
     return user_level
 
 
@@ -134,8 +139,9 @@ def select_wrong_guesses():
         if not isnumber(user_limit):
             print("Sorry, that is not a valid number of wrong guesses. Try again.\n")
     user_limit = int(float(user_limit))
-    print("Ok, you are granted {} wrong guesses to solve the quiz.".format(user_limit))
+    print("Ok, you are granted {} wrong guesses to solve the quiz.\n".format(user_limit))
     return user_limit
+
 
 
 # ******************************************************************************
@@ -147,7 +153,7 @@ def select_wrong_guesses():
 
 def print_phrase(phrase):
     """Prints the problem phrase in between two lines (for accent)."""
-    print("\nPhrase:")
+    print("Phrase:")
     print_line()
     print(phrase)
     print_line()
@@ -157,7 +163,7 @@ def print_phrase(phrase):
 def print_final_state(phrase):
     """Prints the final state of problem phrase in between two lines of stronger
     accent."""
-    print("\nFinal State:")
+    print("Final State:")
     print_line(char="=")
     print(phrase)
     print_line(char="=")
@@ -196,13 +202,12 @@ def end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index,
     maximum placeholder index as inputs."""
 
     if wrong_guesses_counter > wrong_guesses_limit:
-        print("You have reached the limit of wrong guesses!")
+        print("You have reached the limit of wrong guesses!\n")
     elif placeholder_index > max_placeholder_index:
-        print("Congratulations. You have filled all the gaps correctly.")
+        print("Congratulations. You have filled all the gaps correctly.\n")
     else:
-        print("This is odd. The game is over, but I  don't know why!?")
+        print("This is odd. The game is over, but I  don't know why!?\n")
     
-    print("")
     print_line(char="#")
     print("### GAME OVER ###")    
     print_line(char="#")
@@ -242,8 +247,9 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
                 placeholder))
             wrong_guesses_counter += 1
             if wrong_guesses_counter <= wrong_guesses_limit:
-                print("Try again!")
+                print("Try again!\n")
 
+    print("")
     print_final_state(problem_phrase)
 
     # The game is over. 
@@ -255,4 +261,25 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
 
 
 
+# ******************************************************************************
+#
+# RUN
+# 
+# ******************************************************************************
 
+
+if __name__ == "__main__":
+    
+    fill_in_the_gaps_title()
+
+    difficulty = select_difficulty()
+
+    limit = select_wrong_guesses()
+
+    play_game(
+        problem_phrase = "This is a __1__.", 
+        list_of_tuples_placeholder_and_answer = [
+            ("__1__", "test")
+            ], 
+            wrong_guesses_limit = limit
+            )
