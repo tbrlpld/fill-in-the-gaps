@@ -1,4 +1,5 @@
 #!/usr/bin/python2
+# -*- coding: utf-8 -*-
 
 from __future__ import print_function
 import time
@@ -6,7 +7,6 @@ import sys
 
 ####  TODO
 # 
-# - Set up whole game flow.
 # - Create problems for easy, medium and hard.
 # - Check for function with more than 18 lines.
 
@@ -67,6 +67,26 @@ def clear_line(length):
     return None
 
 
+def typing_print(typing_string , from_index = 0, to_index = None, step = 1, 
+        delay = 0.1):
+    """Takes in a string and prints the letters one by one to simulate typing. 
+    The part of the string to be typed can be defined with the optional arguments
+    from_index and to_index. Also, the step size and the typing delay can be 
+    defined with optional arguments. Returns None."""
+
+    # If to_index was not defined explicitly it is None. This has to be turned
+    # into something useful, like the maximum possible index.
+    if to_index == None:
+        to_index = len(typing_string) + 1
+
+    for i in range(from_index, to_index, step):
+        clear_line(len(typing_string))
+        print_overwritable_slice(string_to_print=typing_string, slice_end=i)
+        time.sleep(delay)
+
+    return None
+
+
 def fill_in_the_gaps_title():
     """Print an animated title for the game."""
     print("")
@@ -76,28 +96,24 @@ def fill_in_the_gaps_title():
     fix_first_index = 16
 
     # print title forward with gap
-    for i in range(1, title_max_index):
-        print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.1)
-    
+    typing_print(typing_string = title, from_index = 0, to_index = title_max_index, 
+        step = 1, delay = 0.1) 
+   
     # wait (like recognizing that there is something wrong in the title.)
     time.sleep(0.5)
     
     # remove "typo"
-    for i in range(title_max_index, fix_first_index, -1):
-        clear_line(len(title))
-        print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.1)
-    
+    typing_print(typing_string = title, from_index = title_max_index, 
+        to_index = fix_first_index, step = -1, delay = 0.1) 
+
     # print fixed title
     title = "### Fill in the Gaps ###"
-    for i in range(fix_first_index, title_max_index, 1):
-        print_overwritable_slice(string_to_print=title, slice_end=i)
-        time.sleep(0.1)
+    typing_print(typing_string = title, from_index = fix_first_index, 
+        to_index = title_max_index, step = 1, delay = 0.1) 
+
     print("")
     print_line(char="#")
     print("")
-
     
     return None
 
@@ -133,7 +149,7 @@ def select_wrong_guesses():
     user_limit = ""
     default_limit = 3
     while not isnumber(user_limit):
-        user_limit = raw_input("How may wrong guesses do you want to be allowed?"
+        user_limit = raw_input("How many wrong guesses do you want to be allowed?"
             " (Hit [Enter] for default = {}): ".format(default_limit))
         if user_limit == "":
             user_limit = default_limit
@@ -180,10 +196,15 @@ def get_quiz(level):
         },
         #
         "hard": {
-            "phrase": "This is a __1__. And __2__ is another one.",
+            "phrase": "Dihydrogen monoxide is commonly known as __1__. __1__ boils "
+                "above temperatures of __2__°C and freezes at temperatures below "
+                "__3__°C. Frozen __1__ is called __4__.",
+     
             "placeholders_and_answers": [
-                ("__1__", "test"),
-                ("__2__", "this")
+                ("__1__", "water"),
+                ("__2__", "100"),
+                ("__3__", "0"),
+                ("__4__", "ice")
                 ]
         }
 
