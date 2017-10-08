@@ -121,7 +121,8 @@ def select_difficulty():
             "Possible choices: {}\n".format(possible_levels))
         if user_level not in possible_levels:
             print("Sorry, that is not a valid level. Try again.\n")
-    print("Ok, it's going to be {}.\n".format(user_level))
+    print("Ok, it's going to be {}.".format(user_level))
+    print("")
     return user_level
 
 
@@ -139,8 +140,55 @@ def select_wrong_guesses():
         if not isnumber(user_limit):
             print("Sorry, that is not a valid number of wrong guesses. Try again.\n")
     user_limit = int(float(user_limit))
-    print("Ok, you are granted {} wrong guesses to solve the quiz.\n".format(user_limit))
+    print("Ok, you are granted {} wrong guesses to solve the quiz.".format(user_limit))
     return user_limit
+
+
+
+# ******************************************************************************
+#
+# QUIZ PHRASES
+# 
+# ******************************************************************************
+
+
+def get_quiz(level):
+    """Takes in a level string (easy, medium or hard) and returns a dictionary 
+    containing the associated problem phrase and the list of tuples (containing 
+    the placeholders and answers)."""
+    quiz = {
+        "easy": {
+            "phrase": "The president of the United States of America in 2017 "
+                "is Donald __1__. Before __1__ it was __2__ Obama. __2__ Obama's "
+                "predecessor was George W. __3__.",
+            "placeholders_and_answers": [
+                ("__1__", "Trump"),
+                ("__2__", "Barack"),
+                ("__3__", "Bush")
+                ]
+        },
+        #
+        "medium": {
+            "phrase": "The president of the United States of America in 2017 "
+                "is __1__. Before __1__ it was __2__. __2__'s "
+                "predecessor was __3__.",
+            "placeholders_and_answers": [
+                ("__1__", "Donald Trump"),
+                ("__2__", "Barack Obama"),
+                ("__3__", "George W. Bush")
+                ]
+        },
+        #
+        "hard": {
+            "phrase": "This is a __1__. And __2__ is another one.",
+            "placeholders_and_answers": [
+                ("__1__", "test"),
+                ("__2__", "this")
+                ]
+        }
+
+    }
+    return quiz[level]
 
 
 
@@ -234,6 +282,7 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
         placeholder = list_of_tuples_placeholder_and_answer[placeholder_index][0]
         answer = list_of_tuples_placeholder_and_answer[placeholder_index][1]
 
+        print("")
         print_phrase(problem_phrase)
         user_answer = raw_input("What do you think fits {}? ".format(placeholder))
 
@@ -247,7 +296,7 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
                 placeholder))
             wrong_guesses_counter += 1
             if wrong_guesses_counter <= wrong_guesses_limit:
-                print("Try again!\n")
+                print("Try again!")
 
     print("")
     print_final_state(problem_phrase)
@@ -276,10 +325,10 @@ if __name__ == "__main__":
 
     limit = select_wrong_guesses()
 
+    quiz = get_quiz(difficulty)
+
     play_game(
-        problem_phrase = "This is a __1__.", 
-        list_of_tuples_placeholder_and_answer = [
-            ("__1__", "test")
-            ], 
-            wrong_guesses_limit = limit
-            )
+        problem_phrase = quiz["phrase"],
+        list_of_tuples_placeholder_and_answer = quiz["placeholders_and_answers"],
+        wrong_guesses_limit = limit
+        )
