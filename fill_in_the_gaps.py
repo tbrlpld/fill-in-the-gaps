@@ -8,7 +8,6 @@ import sys
 ####  TODO
 # 
 # - Create problems for easy, medium and hard.
-# - Check for function with more than 18 lines.
 
 
 
@@ -199,7 +198,6 @@ def get_quiz(level):
             "phrase": "Dihydrogen monoxide is commonly known as __1__. __1__ boils "
                 "above temperatures of __2__°C and freezes at temperatures below "
                 "__3__°C. Frozen __1__ is called __4__.",
-     
             "placeholders_and_answers": [
                 ("__1__", "water"),
                 ("__2__", "100"),
