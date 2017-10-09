@@ -7,8 +7,7 @@ import sys
 
 ####  TODO
 # 
-# - Fix typing print to really work backward.
-# - Create problems for easy, medium and hard.
+# - Create problems for medium.
 
 
 
@@ -190,19 +189,17 @@ def get_quiz(level):
         },
         #
         "medium": {
-            "phrase": "The president of the United States of America in 2017 "
-                "is __1__. Before __1__ it was __2__. __2__'s "
-                "predecessor was __3__.",
+            "phrase": "__1__ sells __2__ by the __3__.",
             "placeholders_and_answers": [
-                ("__1__", "Donald Trump"),
-                ("__2__", "Barack Obama"),
-                ("__3__", "George W. Bush")
+                ("__1__", "She"),
+                ("__2__", "seashells"),
+                ("__3__", "seashore")
                 ]
         },
         #
         "hard": {
             "phrase": "Dihydrogen monoxide is commonly known as __1__. __1__ boils "
-                "above temperatures of __2__°C and freezes at temperatures below "
+                "at temperatures above __2__°C and freezes at temperatures below "
                 "__3__°C. Frozen __1__ is called __4__.",
             "placeholders_and_answers": [
                 ("__1__", "water"),
