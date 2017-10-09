@@ -5,10 +5,6 @@ from __future__ import print_function
 import time
 import sys
 
-####  TODO
-# 
-# - Create problems for medium.
-
 
 
 # ******************************************************************************
