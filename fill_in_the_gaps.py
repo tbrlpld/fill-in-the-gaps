@@ -7,6 +7,7 @@ import sys
 
 ####  TODO
 # 
+# - Fix typing print to really work backward.
 # - Create problems for easy, medium and hard.
 
 
@@ -71,16 +72,21 @@ def typing_print(typing_string , from_index = 0, to_index = None, step = 1,
     """Takes in a string and prints the letters one by one to simulate typing. 
     The part of the string to be typed can be defined with the optional arguments
     from_index and to_index. Also, the step size and the typing delay can be 
-    defined with optional arguments. Returns None."""
+    defined with optional arguments. Returns None.
+    Attention: The cursor remains at the beginning of the line printed. To avoid
+    overwriting, print an empty string afterwards."""
 
     # If to_index was not defined explicitly it is None. This has to be turned
     # into something useful, like the maximum possible index.
     if to_index == None:
-        to_index = len(typing_string) + 1
+        to_index = len(typing_string)
 
-    for i in range(from_index, to_index, step):
+    range_end_modifier = step/abs(step)
+
+    for i in range(from_index, to_index + range_end_modifier, step):
         clear_line(len(typing_string))
         print_overwritable_slice(string_to_print=typing_string, slice_end=i)
+        # print(i)
         time.sleep(delay)
 
     return None
@@ -91,7 +97,7 @@ def fill_in_the_gaps_title():
     print("")
     print_line(char="#")
     title = "### Fill in the ____ ###"
-    title_max_index = len(title) + 1
+    title_max_index = len(title)
     fix_first_index = 16
 
     # print title forward with gap
