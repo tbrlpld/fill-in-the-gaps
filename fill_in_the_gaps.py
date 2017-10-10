@@ -135,7 +135,7 @@ def select_difficulty():
     possible_levels = ["easy", "medium", "hard"]
     while user_level not in possible_levels:
         user_level = raw_input("Which difficulty level do you want to play? "
-            "Possible choices: {}\n".format(possible_levels))
+            "Possible choices: {}\n".format(possible_levels)).lower()
         if user_level not in possible_levels:
             print("Sorry, that is not a valid level. Try again.\n")
     print("Ok, it's going to be {}.".format(user_level))
