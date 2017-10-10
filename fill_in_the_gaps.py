@@ -78,11 +78,11 @@ def typing_print(typing_string , from_index = 0, to_index = None, step = 1,
 
     range_end_modifier = step/abs(step)
 
-    for current_slice_end_printed in range(from_index, 
+    for end_of_slice_printed in range(from_index, 
             to_index + range_end_modifier, step):
         clear_line(len(typing_string))
         print_overwritable_slice(string_to_print=typing_string, 
-            slice_end=current_slice_end_printed)
+            slice_end=end_of_slice_printed)
         time.sleep(delay)
 
     return None
