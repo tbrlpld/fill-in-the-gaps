@@ -6,7 +6,6 @@ import time
 import sys
 
 
-
 # ******************************************************************************
 #
 # HELPER FUNCTIONS
@@ -36,7 +35,6 @@ def isnumber(num):
             return True
     else:
         return False
-
 
 
 # ******************************************************************************
@@ -119,7 +117,6 @@ def fill_in_the_gaps_title():
     return None
 
 
-
 # ******************************************************************************
 #
 # USER OPTIONS
@@ -159,7 +156,6 @@ def select_wrong_guesses():
     user_limit = int(float(user_limit))
     print("Ok, you are granted {} wrong guesses to solve the quiz.".format(user_limit))
     return user_limit
-
 
 
 # ******************************************************************************
@@ -213,7 +209,6 @@ def get_quiz(level):
     return quiz[level]
 
 
-
 # ******************************************************************************
 #
 # GAME
@@ -223,6 +218,7 @@ def get_quiz(level):
 
 def print_phrase(phrase):
     """Prints the problem phrase in between two lines (for accent)."""
+    print("")
     print("Phrase:")
     print_line()
     print(phrase)
@@ -233,6 +229,7 @@ def print_phrase(phrase):
 def print_final_state(phrase):
     """Prints the final state of problem phrase in between two lines of stronger
     accent."""
+    print("")
     print("Final State:")
     print_line(char="=")
     print(phrase)
@@ -308,7 +305,6 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
         placeholder = list_of_tuples_placeholder_and_answer[placeholder_index][0]
         answer = list_of_tuples_placeholder_and_answer[placeholder_index][1]
 
-        print("")
         print_phrase(problem_phrase)
         user_answer = raw_input("What do you think fits {}? ".format(placeholder))
 
@@ -324,7 +320,6 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
             if wrong_guesses_counter <= wrong_guesses_limit:
                 print("Try again!")
 
-    print("")
     print_final_state(problem_phrase)
 
     # The game is over. 
@@ -335,7 +330,6 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
     return None
 
 
-
 # ******************************************************************************
 #
 # RUN
@@ -344,15 +338,10 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
 
 
 if __name__ == "__main__":
-    
     fill_in_the_gaps_title()
-
     difficulty = select_difficulty()
-
     limit = select_wrong_guesses()
-
     quiz = get_quiz(difficulty)
-
     play_game(
         problem_phrase = quiz["phrase"],
         list_of_tuples_placeholder_and_answer = quiz["placeholders_and_answers"],
