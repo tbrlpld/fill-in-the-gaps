@@ -176,20 +176,23 @@ def get_quiz(level):
         "easy": {
             "phrase": "The president of the United States of America in 2017 "
                 "is Donald __1__. Before __1__ it was __2__ Obama. __2__ Obama's "
-                "predecessor was George W. __3__.",
+                "predecessor was George W. __3__. George W. __3__ followed "
+                "Bill Clinton in the __4__ office.",
             "placeholders_and_answers": [
                 ("__1__", "Trump"),
                 ("__2__", "Barack"),
-                ("__3__", "Bush")
+                ("__3__", "Bush"),
+                ("__4__", "oval"),
                 ]
         },
         #
         "medium": {
-            "phrase": "__1__ sells __2__ by the __3__.",
+            "phrase": "How much __1__ __2__ a __3__ chuck if a __3__ __4__ chuck __1__?",
             "placeholders_and_answers": [
-                ("__1__", "She"),
-                ("__2__", "seashells"),
-                ("__3__", "seashore")
+                ("__1__", "wood"),
+                ("__2__", "would"),
+                ("__3__", "woodchuck"),
+                ("__4__", "could")
                 ]
         },
         #
