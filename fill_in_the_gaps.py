@@ -251,8 +251,11 @@ def replace_case_sensitive(phrase, placeholder, replacement):
         placeholder_index = phrase.find(placeholder)
 
         is_first_word_of_phrase = placeholder_index == 0
+        # Offset to phrase start necessary to be able to not check the end of 
+        # the phrase (negative indexes) when checking for possible sentence ends.
         offset_to_last_sentence_end = 2
-        is_first_word_of_sentence = placeholder_index >= offset_to_last_sentence_end \
+        min_offset_to_phrase_start = offset_to_last_sentence_end 
+        is_first_word_of_sentence = placeholder_index >= min_offset_to_phrase_start \
             and phrase[placeholder_index - offset_to_last_sentence_end] in ".!?"
 
         if is_first_word_of_phrase or is_first_word_of_sentence:
