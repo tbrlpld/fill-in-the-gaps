@@ -251,8 +251,9 @@ def replace_case_sensitive(phrase, placeholder, replacement):
         placeholder_index = phrase.find(placeholder)
 
         is_first_word_of_phrase = placeholder_index == 0
-        is_first_word_of_sentence = placeholder_index >= 2 \
-            and phrase[placeholder_index - 2] in ".!?"
+        offset_to_last_sentence_end = 2
+        is_first_word_of_sentence = placeholder_index >= offset_to_last_sentence_end \
+            and phrase[placeholder_index - offset_to_last_sentence_end] in ".!?"
 
         if is_first_word_of_phrase or is_first_word_of_sentence:
             # If placeholder is first word in phrase or sentence, its replacement
@@ -294,7 +295,7 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
     This function always returns None."""
     wrong_guesses_counter = 0
     placeholder_index = 0
-    max_placeholder_index =  len(list_of_tuples_placeholder_and_answer) - 1
+    max_placeholder_index = len(list_of_tuples_placeholder_and_answer) - 1
 
     # Play as long as not all placeholders are replaced and the wrong guesses 
     # limit is not reached.
