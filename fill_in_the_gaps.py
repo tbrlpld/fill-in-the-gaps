@@ -237,6 +237,16 @@ def print_final_state(phrase):
     return None    
 
 
+def get_user_answer(phrase, placeholder):
+    """Print phrase with placeholder and ask user to fill the placeholder. 
+    Returns the user's answer."""
+
+    print_phrase(phrase)
+    user_answer = raw_input("What do you think fits {}? ".format(placeholder))
+    return user_answer
+
+
+
 def replace_case_sensitive(phrase, placeholder, replacement):
     """Takes in a phrase (possibly conisting of multiple sentences), a placeholder
     and its replacement. Each occurence of the placeholder will be replaced with
@@ -266,11 +276,14 @@ def replace_case_sensitive(phrase, placeholder, replacement):
     return phrase
 
 
-def end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index, 
-    max_placeholder_index):
-    """Determines if game was won or lost and prints a fitting message 
-    accordingly. Needs counter and limit for wrong guesses and current and 
-    maximum placeholder index as inputs."""
+def end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit, 
+    placeholder_index, max_placeholder_index):
+    """Determine if game was won or lost and print a fitting message. 
+
+    Needs counter and limit for wrong guesses and current and maximum 
+    placeholder index as inputs."""
+
+    print_final_state(problem_phrase)
 
     if wrong_guesses_counter > wrong_guesses_limit:
         print("You have reached the limit of wrong guesses!\n")
@@ -305,9 +318,8 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
         placeholder = list_of_tuples_placeholder_and_answer[placeholder_index][0]
         answer = list_of_tuples_placeholder_and_answer[placeholder_index][1]
 
-        print_phrase(problem_phrase)
-        user_answer = raw_input("What do you think fits {}? ".format(placeholder))
-
+        user_answer = get_user_answer(problem_phrase, placeholder)
+        
         if user_answer.lower() == answer.lower(): # checking case insensitive
             print("Correct!")
             problem_phrase = replace_case_sensitive(problem_phrase, placeholder, 
@@ -320,12 +332,10 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
             if wrong_guesses_counter <= wrong_guesses_limit:
                 print("Try again!")
 
-    print_final_state(problem_phrase)
-
     # The game is over. 
     # Time to tell the player how it ended.
-    end_of_game(wrong_guesses_counter, wrong_guesses_limit, placeholder_index, 
-        max_placeholder_index)
+    end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit, 
+        placeholder_index, max_placeholder_index)
 
     return None
 
