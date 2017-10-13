@@ -171,40 +171,19 @@ def get_quiz(level):
     the placeholders and answers)."""
     quiz = {
         "easy": {
-            "phrase": "The president of the United States of America in 2017 "
-                "is Donald __1__. Before __1__ it was __2__ Obama. __2__ Obama's "
-                "predecessor was George W. __3__. George W. __3__ followed "
-                "Bill Clinton in the __4__ office.",
-            "placeholders_and_answers": [
-                ("__1__", "Trump"),
-                ("__2__", "Barack"),
-                ("__3__", "Bush"),
-                ("__4__", "oval"),
-                ]
+            "phrase": "The president of the United States of America in 2017 is Donald __1__. Before __1__ it was __2__ Obama. __2__ Obama's predecessor was George W. __3__. George W. __3__ followed Bill Clinton in the __4__ office.",
+            "placeholders_and_answers": [("__1__", "Trump"), ("__2__", "Barack"), ("__3__", "Bush"), ("__4__", "oval")]
         },
         #
         "medium": {
             "phrase": "How much __1__ __2__ a __3__ chuck if a __3__ __4__ chuck __1__?",
-            "placeholders_and_answers": [
-                ("__1__", "wood"),
-                ("__2__", "would"),
-                ("__3__", "woodchuck"),
-                ("__4__", "could")
-                ]
+            "placeholders_and_answers": [("__1__", "wood"), ("__2__", "would"), ("__3__", "woodchuck"), ("__4__", "could")]
         },
         #
         "hard": {
-            "phrase": "Dihydrogen monoxide is commonly known as __1__. __1__ boils "
-                "at temperatures above __2__°C and freezes at temperatures below "
-                "__3__°C. Frozen __1__ is called __4__.",
-            "placeholders_and_answers": [
-                ("__1__", "water"),
-                ("__2__", "100"),
-                ("__3__", "0"),
-                ("__4__", "ice")
-                ]
+            "phrase": "Dihydrogen monoxide is commonly known as __1__. __1__ boils at temperatures above __2__°C and freezes at temperatures below __3__°C. Frozen __1__ is called __4__.",
+            "placeholders_and_answers": [ ("__1__", "water"), ("__2__", "100"), ("__3__", "0"), ("__4__", "ice")]
         }
-
     }
     return quiz[level]
 
@@ -312,8 +291,7 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
 
     # Play as long as not all placeholders are replaced and the wrong guesses 
     # limit is not reached.
-    while wrong_guesses_counter <= wrong_guesses_limit \
-        and placeholder_index <= max_placeholder_index:
+    while wrong_guesses_counter <= wrong_guesses_limit and placeholder_index <= max_placeholder_index:
 
         placeholder = list_of_tuples_placeholder_and_answer[placeholder_index][0]
         answer = list_of_tuples_placeholder_and_answer[placeholder_index][1]
@@ -322,20 +300,17 @@ def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guess
         
         if user_answer.lower() == answer.lower(): # checking case insensitive
             print("Correct!")
-            problem_phrase = replace_case_sensitive(problem_phrase, placeholder, 
-                answer)
+            problem_phrase = replace_case_sensitive(problem_phrase, placeholder, answer)
             placeholder_index += 1
         else:
-            print("Sorry, but '{}' does not fit {}.".format(user_answer, 
-                placeholder))
+            print("Sorry, but '{}' does not fit {}.".format(user_answer, placeholder))
             wrong_guesses_counter += 1
             if wrong_guesses_counter <= wrong_guesses_limit:
                 print("Try again!")
 
     # The game is over. 
     # Time to tell the player how it ended.
-    end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit, 
-        placeholder_index, max_placeholder_index)
+    end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit, placeholder_index, max_placeholder_index)
 
     return None
 
