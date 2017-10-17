@@ -1,5 +1,6 @@
 #!/usr/bin/python2
 # -*- coding: utf-8 -*-
+"""Play a fill-in-the-gaps game."""
 
 from __future__ import print_function
 import time
@@ -14,15 +15,22 @@ import sys
 
 
 def print_line(char="-"):
-    """Prints 80 repetitions of a defined character to create a line. 
-    Default is '-'."""
+    """
+    Print 80 repetitions of a defined character to create a line. Return None.
+
+    Input:
+    char -- Character used to create the line. Default is '-'.
+    """
+
     print(80*char)
     return None
 
 
 def isnumber(num):
-    """Tests is the input can be turned into a float. If yes returns True, 
-    otherwise returns False."""
+    """
+    Test if input can be turned into a number/float. Return True or False.
+
+    Input has to be string, integer or float. In all other cases return False."""
 
     # float() can only handle numbers (int, float) and strings as inputs. 
     # Therefore, testing if input is one of these types.
@@ -45,16 +53,33 @@ def isnumber(num):
 
 
 def print_overwritable_slice(string_to_print, slice_end):
-    """Prints a string to a defined slice end, and places the cursor at the 
-    beginning of the line, to enable overwriting."""
+    """
+    Print an overwritable slice of a string. Return None.
+
+    Inputs:
+    string_to_print -- The string of which the slice will be printed.
+    slice_end -- Index of the end of the slice to be printed.
+
+    After printing the definied slice, the cursor returns to the beginning of the 
+    line to enable overwriting.
+    """
+
     sys.stdout.write("\r" + string_to_print[:slice_end])
     sys.stdout.flush()
     return None
 
 
 def clear_line(length):
-    """Prints a given number of spaces (basically an empty line). The cursor is
-    placed back at the beginning of the line to be overwritten."""
+    """
+    Print an overwritable empty line of a defined length. Return None.
+
+    Input:
+    length -- Length of line/number of spaces to be printed.
+
+    After printing the definied line, the cursor returns to the beginning of the 
+    line to enable overwriting.
+    """
+
     sys.stdout.write("\r" + " "*length)
     sys.stdout.flush()    
     return None
@@ -62,12 +87,20 @@ def clear_line(length):
 
 def typing_print(typing_string , from_index = 0, to_index = None, step = 1, 
         delay = 0.1):
-    """Takes in a string and prints the letters one by one to simulate typing. 
-    The part of the string to be typed can be defined with the optional arguments
-    from_index and to_index. Also, the step size and the typing delay can be 
-    defined with optional arguments. Returns None.
-    Attention: The cursor remains at the beginning of the line printed. To avoid
-    overwriting, print an empty string afterwards."""
+    """
+    Print a string one character at a time to simulate typing. Return None.
+
+    Inputs:
+    typing_string -- String to be printed in typing style.
+    from_index -- First index of string to be printed in typing style. Default = 0.
+    to_index -- Last index of string to be printed in typing style. 
+        Default = end of string.
+    step -- Number of characters printed at the same time. Default = 1.
+    delay -- Time in seconds between print of each step/character. Default = 0.1.
+
+    Cursor returns to beginning of line after printing is done. To avoid overwriting, 
+    print an empty string afterwards.
+    """
 
     # If to_index was not defined explicitly it is None. This has to be turned
     # into something useful, like the maximum possible index.
@@ -88,6 +121,7 @@ def typing_print(typing_string , from_index = 0, to_index = None, step = 1,
 
 def fill_in_the_gaps_title():
     """Print an animated title for the game."""
+
     print("")
     print_line(char="#")
     title = "### Fill in the ____ ###"
@@ -125,9 +159,14 @@ def fill_in_the_gaps_title():
 
 
 def select_difficulty():
-    """Promts the user to select a difficulty level (easy, medium or hard) and 
-    returns the selected level as string. If the user input does not match one 
-    of the options, the input is requested again."""
+    """
+    Promt user to select a difficulty level. Return user's selection.
+
+    Print message to user to select a difficulty level ["easy", "medium", "hard"].
+    If user input is not a valid level, inform user of wrong input and promt
+    request again.
+    """
+
     user_level = ""
     possible_levels = ["easy", "medium", "hard"]
     while user_level not in possible_levels:
@@ -141,9 +180,15 @@ def select_difficulty():
 
 
 def select_wrong_guesses():
-    """Promts the user to select a number of possible wrong guesses or to just 
-    hit [Enter] for the default value of 3. Returns the selected number of 
-    possible wrong guesses as an integer."""
+    """
+    Promt user to select a number of possible wrong guesses. Return user's selection.
+
+    Print message to user to select a number of possible wrong guesses. 
+    Also, offer to just hit [Enter] for the default number of 3 wrong guesses. 
+    If user input is not a number, inform user of wrong input and promt
+    request again.    
+    """
+
     user_limit = ""
     default_limit = 3
     while not isnumber(user_limit):
@@ -166,9 +211,20 @@ def select_wrong_guesses():
 
 
 def get_quiz(level):
-    """Takes in a level string (easy, medium or hard) and returns a dictionary 
-    containing the associated problem phrase and the list of tuples (containing 
-    the placeholders and answers)."""
+    """
+    Take level string and return quiz dictionary with phrase, placeholders and answers.
+
+    Input:
+    level -- String defining the quiz to be returned. Possible levels "easy", 
+        "medium", "hard".
+
+    Output:
+    Dictionary containing the "phrase" and a list of tuples containing the 
+    "placeholders_and_answers". Each list entry is a tuple, containing the 
+    placeholder at index 0 and the correct replacement at index 1.
+    If level not available return None.
+    """
+
     quiz = {
         "easy": {
             "phrase": "The president of the United States of America in 2017 is Donald __1__. Before __1__ it was __2__ Obama. __2__ Obama's predecessor was George W. __3__. George W. __3__ followed Bill Clinton in the __4__ office.",
@@ -185,7 +241,10 @@ def get_quiz(level):
             "placeholders_and_answers": [ ("__1__", "water"), ("__2__", "100"), ("__3__", "0"), ("__4__", "ice")]
         }
     }
-    return quiz[level]
+    if level in quiz:
+        return quiz[level]
+    else:
+        return None
 
 
 # ******************************************************************************
@@ -196,7 +255,15 @@ def get_quiz(level):
 
 
 def print_phrase(phrase):
-    """Prints the problem phrase in between two lines (for accent)."""
+    """
+    Print the problem phrase in between two lines. Return None.
+
+    Input:
+    phrase -- String to be printed in between two horizontal lines. The horizontal
+        lines act as emphasis to the printed phrase and separate it from other
+        surrounding lines.
+    """
+
     print("")
     print("Phrase:")
     print_line()
@@ -206,8 +273,15 @@ def print_phrase(phrase):
 
 
 def print_final_state(phrase):
-    """Prints the final state of problem phrase in between two lines of stronger
-    accent."""
+    """
+    Print the final state of problem phrase in between two strong lines. Return None.
+    
+    Input:
+    phrase -- String to be printed in between two horizontal lines. The horizontal
+        lines act as emphasis to the printed phrase and separate it from other
+        surrounding lines.
+    """
+
     print("")
     print("Final State:")
     print_line(char="=")
@@ -217,8 +291,17 @@ def print_final_state(phrase):
 
 
 def get_user_answer(phrase, placeholder):
-    """Print phrase with placeholder and ask user to fill the placeholder. 
-    Returns the user's answer."""
+    """
+    Print phrase with placeholder and ask user to fill the placeholder. 
+
+    Input:
+    phrase -- Quiz phrase/string containing placeholder(s).
+    placeholder -- Placeholder string occuring in the phrase the user is asked
+        to replace.
+    
+    Output:
+    The user's answer string (supposed to replace the placeholder).
+    """
 
     print_phrase(phrase)
     user_answer = raw_input("What do you think fits {}? ".format(placeholder))
@@ -226,12 +309,24 @@ def get_user_answer(phrase, placeholder):
 
 
 
-def replace_case_sensitive(phrase, placeholder, replacement):
-    """Takes in a phrase (possibly conisting of multiple sentences), a placeholder
-    and its replacement. Each occurence of the placeholder will be replaced with
-    the replacement. If the placeholder is first word in phrase of sentence, the
-    replacement is capitalized. 
-    The phrase with placeholders replaced will be returned."""
+def replace_case_sensitive(phrase, placeholder, replacement):    
+    """
+    Replace a placeholder in the phrase with it's replacement with respect to case.
+
+    Inputs:
+    phrase -- Quiz phrase/string containing placeholder(s).
+    placeholder -- Placeholder string occuring in the phrase which is to be
+        replaced.
+    replacment -- Replacement for the placeholder. 
+
+    Outputs: 
+    Phrase in which all occurrences of the placeholder replaced with the replacement
+    using the correct case.
+
+    If an occurrence of the placeholder is the first word in the phrase or in a
+    sentence, the replacement will be capitalzed. 
+    In any other position the replacement is used as defined in the input.
+    """
 
     while placeholder in phrase:
         placeholder_index = phrase.find(placeholder)
@@ -257,10 +352,27 @@ def replace_case_sensitive(phrase, placeholder, replacement):
 
 def end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit, 
     placeholder_index, max_placeholder_index):
-    """Determine if game was won or lost and print a fitting message. 
+    """
+    Determine if game was won or lost and print a fitting message. Return None.
 
-    Needs counter and limit for wrong guesses and current and maximum 
-    placeholder index as inputs."""
+    Inputs: 
+    problem_phrase -- Final state of phrase the user has tried to solve.
+    wrong_guesses_counter -- Number of wrong guesses the user has made, while
+        trying to solve the quiz.
+    wrong_guesses_limit -- Maximum number of wrong guesses the user was allowed
+        to have while trying to solve the quiz.
+    placeholder_index -- Index of the placeholder the user would be supposed to
+        replace.
+    max_placeholder_index -- Maximum index of placeholders the user can be asked
+        to replace.
+
+    Print final state of quiz phrase and a message showing if the user has won
+    or lost the game. 
+    If the user needed more wrong guesses than allowed, then the user lost.
+    If the user would be asked to fill a placeholder index higher than the maximum
+    possible, the user has filled all gaps and won.
+    Print 'game over' message.
+    """
 
     print_final_state(problem_phrase)
 
@@ -279,12 +391,29 @@ def end_of_game(problem_phrase, wrong_guesses_counter, wrong_guesses_limit,
 
 
 def play_game(problem_phrase, list_of_tuples_placeholder_and_answer, wrong_guesses_limit):
-    """This is the main function to play the fill-in-the-gaps game. It takes the
-    problem phrase (the text with the gaps), a list of tuples and the maximum
-    number of wrong guesses as inputs. 
-    Each tuple in the list has to contain the placeholder (used in the problem 
-    phrase) and it's correct replacement.
-    This function always returns None."""
+    """
+    Start a fill-in-the-gaps game. Return None.
+
+    Inputs:
+    problem_phrase -- Quiz phrase/string containing placeholder(s).
+    list_of_tuples_placeholder_and_answer -- List containing tuples, with each
+        tuple containing a placeholder occurring in the phrase at index 0 and
+        the correct replacement for that placeholder at index 1.
+    wrong_guesses_limit -- Integer defining how many wrong guesses the user is 
+        allowed to make while trying to replace all placeholders.
+
+    Print the problem phrase and ask the user to give a replacement for a specific
+    placeholder. 
+    If the user input corresponds to the defined replacement (case insensitive)
+    replace the placeholder with the correct answer (case sensitive). Print the
+    phrase with the placeholder replaced and ask the user to replace the next 
+    placeholder.
+    If the user input does not correspond to the defined replacement, inform the
+    user about the wrong answer and ask to fill the placeholder again. 
+    The game ends if all placeholders are replaced or more wrong guesses have been
+    made than allowed. Print corresponding message.
+    """
+
     wrong_guesses_counter = 0
     placeholder_index = 0
     max_placeholder_index = len(list_of_tuples_placeholder_and_answer) - 1
